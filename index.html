@@ -2,296 +2,110 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Archivos 3D Médicos – Plataforma</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plataforma Archivos 3D Médicos</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="shell">
-    <div class="shell-inner">
-      <!-- Topbar -->
-      <div class="topbar">
-        <div class="brand">
-          <div class="brand-icon">3D</div>
-          <div>
-            <div class="brand-text-title">Archivos 3D Médicos</div>
-            <div class="brand-text-sub">
-              Plataforma para distribución de piezas médicas en 3D
-            </div>
-          </div>
-        </div>
 
-        <div class="nav">
-          <button class="active" data-view="view-repo"><span class="dot"></span>Repositorio</button>
-          <button data-view="view-detalle"><span class="dot"></span>Detalle de pieza</button>
-          <button data-view="view-subir"><span class="dot"></span>Subir pieza</button>
-          <button data-view="view-historial"><span class="dot"></span>Historial</button>
-          <button data-view="view-preferencias"><span class="dot"></span>Preferencias</button>
-          <button data-view="view-registro"><span class="dot"></span>Registro</button>
-        </div>
-      </div>
+<div class="container">
 
-      <!-- Buscador -->
-      <div class="search-row">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input id="searchInput" type="text" placeholder="Buscar piezas médicas..." />
-        </div>
-        <div class="user-pill">
-          <div class="user-pill-avatar" id="userAvatar">--</div>
-          <span id="userLabel">Sesión invitado</span>
-        </div>
-      </div>
-
-      <!-- Layout principal -->
-      <div class="layout">
-        <!-- Panel repositorio -->
-        <div class="panel">
-          <div class="panel-header">
-            <div>
-              <div class="panel-title">Piezas disponibles</div>
-              <div class="panel-sub">
-                Catálogo conectado a la base de datos.
-              </div>
-            </div>
-            <span class="panel-badge" id="piecesCount">0 piezas</span>
-          </div>
-
-          <div class="cards" id="cardsContainer">
-            <!-- Tarjetas generadas por JS -->
-          </div>
-        </div>
-
-        <!-- Panel derecho: vistas -->
-        <div class="panel">
-          <!-- Vista detalle -->
-          <div class="view active" id="view-detalle">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title" id="detailTitle">Selecciona una pieza</div>
-                <div class="panel-sub" id="detailSubtitle">
-                  Haz clic en una tarjeta para ver el detalle.
-                </div>
-              </div>
-              <span class="badge-soft">Vista de detalle</span>
-            </div>
-
-            <div class="detail-layout">
-              <div class="detail-main">
-                <div class="detail-main-item large">
-                  <div class="detail-shape"></div>
-                </div>
-                <div class="detail-main-item">
-                  <div class="detail-sketch">Vista isométrica simulada</div>
-                </div>
-                <div class="detail-main-item">
-                  <div class="detail-sketch">Plano con cotas aproximadas</div>
-                </div>
-              </div>
-              <div class="detail-side">
-                <div class="detail-side-title" id="detailNameSide">–</div>
-                <div class="detail-side-meta" id="detailMetaSide">
-                  Material: – · Proceso: –
-                </div>
-
-                <dl>
-                  <dt>Dimensiones de referencia</dt>
-                  <dd id="detailDims">–</dd>
-                  <dt>Equipo médico</dt>
-                  <dd id="detailEquipo">–</dd>
-                  <dt>Uso principal</dt>
-                  <dd id="detailUso">
-                    –
-                  </dd>
-                </dl>
-
-                <div class="btn-group">
-                  <button class="btn btn-primary btn-disabled" id="btnStl">Descargar STL</button>
-                  <button class="btn btn-blue btn-disabled" id="btnStep">Descargar STEP</button>
-                  <button class="btn btn-amber btn-disabled" id="btnObj">Descargar OBJ</button>
-                  <button class="btn btn-disabled" id="btnPdf">Manual PDF (en preparación)</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Vista subir pieza -->
-          <div class="view" id="view-subir">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Subir nueva pieza</div>
-                <div class="panel-sub">Solo usuarios registrados.</div>
-              </div>
-              <span class="badge-soft">Subir archivo STL/STEP/OBJ/PDF</span>
-            </div>
-
-            <div class="form-card">
-              <div class="form-title">Datos de la pieza</div>
-
-              <div class="form-group">
-                <label class="form-label" for="upName">Nombre</label>
-                <input class="form-input" id="upName" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="upMaterial">Material</label>
-                <input class="form-input" id="upMaterial" placeholder="Ej. ABS" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="upProceso">Proceso de fabricación</label>
-                <input class="form-input" id="upProceso" placeholder="Ej. CNC" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="upEquipo">Equipo médico</label>
-                <input class="form-input" id="upEquipo" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="upDims">Dimensiones de referencia</label>
-                <input class="form-input" id="upDims" placeholder="Ej. 50 × 34 × 24 mm" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="upUso">Uso principal</label>
-                <input class="form-input" id="upUso" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="upFormat">Formato del archivo</label>
-                <select class="form-input" id="upFormat">
-                  <option value="stl">STL</option>
-                  <option value="step">STEP</option>
-                  <option value="obj">OBJ</option>
-                  <option value="pdf">PDF</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="upFile">Archivo</label>
-                <input class="form-input" id="upFile" type="file" />
-              </div>
-
-              <button class="btn btn-blue" id="btnUpload">Subir pieza</button>
-              <div class="form-footer" id="uploadStatus"></div>
-            </div>
-          </div>
-
-          <!-- Vista historial -->
-          <div class="view" id="view-historial">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Historial de descargas</div>
-                <div class="panel-sub">Vinculado al usuario actual.</div>
-              </div>
-              <button class="btn-outline" id="btnClearHistory">Borrar todo</button>
-            </div>
-
-            <div id="historyList" class="history-list">
-              <!-- Items generados por JS -->
-            </div>
-          </div>
-
-          <!-- Vista preferencias -->
-          <div class="view" id="view-preferencias">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Preferencias de la plataforma</div>
-                <div class="panel-sub">Guardadas por usuario.</div>
-              </div>
-            </div>
-
-            <div class="prefs-grid">
-              <div class="form-card">
-                <div class="form-title">Configuración general</div>
-
-                <div class="form-group">
-                  <label class="form-label" for="prefLanguage">Idioma</label>
-                  <select class="form-input" id="prefLanguage">
-                    <option value="es">Español</option>
-                    <option value="en">Inglés</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <div class="form-label">Formato de descarga preferido</div>
-                  <div class="chip-group">
-                    <div class="chip active" data-format="stl">STL</div>
-                    <div class="chip" data-format="step">STEP</div>
-                    <div class="chip" data-format="obj">OBJ</div>
-                  </div>
-                </div>
-
-                <button class="btn btn-blue" id="btnSavePrefs">Guardar cambios</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Vista registro / login -->
-          <div class="view" id="view-registro">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Acceso a la plataforma</div>
-                <div class="panel-sub">Crear cuenta o iniciar sesión.</div>
-              </div>
-            </div>
-
-            <div class="form-card">
-              <div class="form-title">Crear cuenta</div>
-
-              <div class="form-group">
-                <label class="form-label" for="regName">Nombre completo</label>
-                <input class="form-input" id="regName" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="regEmail">Correo electrónico</label>
-                <input class="form-input" id="regEmail" type="email" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="regPass">Contraseña</label>
-                <input class="form-input" id="regPass" type="password" />
-              </div>
-
-              <button class="btn btn-primary" id="btnRegister">Crear cuenta</button>
-
-              <hr style="margin: .7rem 0; border: none; border-top: 1px solid #e5e7eb;" />
-
-              <div class="form-title">Iniciar sesión</div>
-
-              <div class="form-group">
-                <label class="form-label" for="logEmail">Correo electrónico</label>
-                <input class="form-input" id="logEmail" type="email" />
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="logPass">Contraseña</label>
-                <input class="form-input" id="logPass" type="password" />
-              </div>
-
-              <button class="btn btn-blue" id="btnLogin">Entrar</button>
-
-              <div class="form-footer" id="authStatus"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-        Prototipo para tesis – Plataforma Archivos 3D Médicos
-        <button class="btn-outline" id="btnLogout" style="margin-left:.6rem;">Cerrar sesión</button>
-      </div>
-    </div>
+  <!-- MENU SUPERIOR -->
+  <div style="display:flex;gap:1rem;margin-bottom:1.5rem">
+    <button class="btn btn-blue" onclick="mostrarVista('view-auth')">Registro / Login</button>
+    <button class="btn btn-blue" onclick="mostrarVista('view-catalogo')">Catálogo</button>
+    <button class="btn btn-blue" onclick="mostrarVista('view-upload')">Subir pieza</button>
+    <button class="btn btn-blue" onclick="mostrarVista('view-historial')">Historial descargas</button>
+    <button class="btn btn-blue" onclick="mostrarVista('view-preferencias')">Preferencias</button>
   </div>
 
-  <!-- Firebase (compat) -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <!-- REGISTRO / LOGIN -->
+  <section class="seccion" id="view-auth">
+    <h2>Acceso</h2><br>
+    <input id="regName" placeholder="Nombre" class="form-input" /><br><br>
+    <input id="regEmail" type="email" placeholder="Email" class="form-input" /><br><br>
+    <input id="regPass" type="password" placeholder="Contraseña" class="form-input" /><br><br>
+    <button class="btn btn-primary" id="btnRegister">Crear Cuenta</button><br>
+    <button class="btn btn-blue" id="btnLogin">Iniciar sesión</button><br>
+    <div id="authStatus" class="form-footer"></div>
+  </section>
 
-  <script src="app.js"></script>
+  <!-- CATALOGO -->
+  <section class="seccion activa" id="view-catalogo">
+    <h2>Catálogo de piezas</h2><br>
+    <div class="search-box">
+      <input id="searchInput" placeholder="Buscar piezas médicas..." />
+    </div>
+    <div id="cardsContainer"></div>
+    <div id="piecesCount">0 piezas</div>
+  </section>
+
+  <!-- SUBIR PIEZA -->
+  <section class="seccion" id="view-upload">
+    <h2>Subir pieza</h2>
+    <input id="upName" placeholder="Nombre pieza" class="form-input" /><br><br>
+    <input id="upMaterial" placeholder="Material" class="form-input" /><br><br>
+    <input id="upProceso" placeholder="Proceso" class="form-input" /><br><br>
+    <input id="upEquipo" placeholder="Equipo médico" class="form-input" /><br><br>
+    <input id="upDims" placeholder="Medidas mm" class="form-input" /><br><br>
+    <input id="upUso" placeholder="Uso" class="form-input" /><br><br>
+
+    <select id="upFormat" class="form-input">
+      <option value="stl">STL</option>
+      <option value="step">STEP</option>
+      <option value="obj">OBJ</option>
+      <option value="pdf">PDF</option>
+    </select><br><br>
+
+    <input id="upFile" type="file" class="form-input" /><br><br>
+    <button class="btn btn-blue" id="btnUpload">Subir archivo</button>
+    <div id="uploadStatus" class="form-footer"></div>
+  </section>
+
+  <!-- DETALLE PIEZA -->
+  <section class="seccion" id="view-detalle">
+    <h2 id="detailTitle">–</h2>
+    <p id="detailSubtitle" class="detail"></p><br>
+    <dl>
+      <dt>Medidas:</dt><dd id="detailDims">–</dd>
+      <dt>Equipo médico:</dt><dd id="detailEquipo">–</dd>
+      <dt>Uso:</dt><dd id="detailUso">–</dd>
+    </dl><br>
+
+    <div class="btn-group">
+      <button class="btn btn-blue" id="btnStl">Descargar STL</button>
+      <button class="btn btn-blue" id="btnStep">Descargar STEP</button>
+      <button class="btn btn-blue" id="btnObj">Descargar OBJ</button>
+      <button class="btn btn-disabled" id="btnPdf">Manual PDF (en preparación)</button>
+    </div>
+  </section>
+
+  <!-- HISTORIAL -->
+  <section class="seccion" id="view-historial">
+    <h2>Historial</h2><br>
+    <div id="historyList"></div>
+  </section>
+
+  <!-- PREFERENCIAS -->
+  <section class="seccion" id="view-preferencias">
+    <h2>Ajustes</h2><br>
+    <select id="prefLanguage" class="form-input">
+      <option value="es">Español</option>
+      <option value="en">Inglés</option>
+    </select><br><br>
+
+    <div class="form-label">Formato de descarga preferido:</div>
+    <div class="chip-group">
+      <div class="chip active" data-format="stl">STL</div>
+      <div class="chip" data-format="step">STEP</div>
+      <div class="chip" data-format="obj">OBJ</div>
+    </div><br><br>
+
+    <button class="btn btn-blue" id="btnSavePrefs">Guardar</button>
+  </section>
+
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
